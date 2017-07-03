@@ -1,14 +1,9 @@
-FROM nixos/nix:1.11
+FROM dock0/full_arch:latest
 
-RUN nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-RUN nix-channel --update
+MAINTAINER Anatoly Kalin <ttldtor@gmail.com>
 
-RUN nix-build -A cmake '<nixpkgs>'
-#RUN nix-env -iA cmake
-#RUN nix-env -iA llvm_34
-#RUN nix-env -iA gitAndTools.gitFull
-#RUN nix-env -iA llvmPackages.clang-unwrapped
-#RUN nix-env -iA boost163
+RUN pacman -Syu --noconfirm gcc boost cmake llvm icu clang gdb valgrind git doxygen wget make tar p7zip zip unzip unrar
+RUN pacman -Sc --noconfirm
 
 # Location where travis config stored
 ENV TRAVIS_CONFIG_PATH /travis
