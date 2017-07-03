@@ -1,6 +1,6 @@
 FROM dock0/full_arch:latest
 
-RUN pacman -Syu --noconfirm gcc boost cmake ctest llvm icu clang gdb valgrind git doxygen wget make tar p7zip zip unzip unrar
+RUN pacman -Syu --noconfirm gcc boost cmake llvm icu clang gdb valgrind git doxygen wget make tar p7zip zip unzip unrar
 RUN pacman -Sc --noconfirm
 
 # Location where travis config stored
