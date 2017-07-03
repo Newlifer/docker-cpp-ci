@@ -1,12 +1,15 @@
-FROM pritunl/archlinux:2017-06-17
+FROM nixos/nix:1.11
 
-RUN pacman -Syu --noconfirm
-RUN pacman -Sy --noconfirm sudo base-devel gettext cmake git ninja boost libsodium wget python
-RUN pacman -Sy --noconfirm 4.0/clang
-RUN pacman -Sy --noconfirm 4.0/llvm
-RUN echo "nobody ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-RUN pacman -Sy ccache --noconfirm
-RUN (echo "y"; echo "y") | pacman -Scc
+RUN nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
+RUN nix-channel --update
+
+
+RUN nix-env -iA nixos.ninja
+RUN nix-env -iA nixos.cmake
+RUN nix-env -iA nixos.llvm_34
+RUN nix-env -iA nixos.gitAndTools.gitFull
+RUN nix-env -iA nixos.llvmPackages.clang-unwrapped
+RUN nix-env -iA nixos.boost163
 
 # Location where travis config stored
 ENV TRAVIS_CONFIG_PATH /travis
